@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class SoccerDatabase implements SoccerDB {
 
-    private Hashtable<String,SoccerPlayer> hTable=new Hashtable<String, SoccerPlayer>();
+    private Hashtable<String,SoccerPlayer> hTable = new Hashtable<String, SoccerPlayer>();
 
     /**
      * add a player
@@ -26,10 +26,13 @@ public class SoccerDatabase implements SoccerDB {
     @Override
     public boolean addPlayer(String firstName, String lastName,
                              int uniformNumber, String teamName) {
-        String nameString=firstName+"##"+lastName;
-        if (hTable.get(nameString)!=null){return false;}//check if player is already in database
 
-        SoccerPlayer np=new SoccerPlayer(firstName, lastName, uniformNumber, teamName);
+        String nameString = firstName + "##" + lastName;
+        if (hTable.get(nameString) != null) {
+            return false;
+        }//check if player is already in database
+
+        SoccerPlayer np = new SoccerPlayer(firstName, lastName, uniformNumber, teamName);
 
         hTable.put(nameString,np);
         return true;
@@ -52,7 +55,8 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public SoccerPlayer getPlayer(String firstName, String lastName) {
-        return null;
+        String nameStringGetPlayer = firstName + "##" + lastName;
+        return hTable.get(nameStringGetPlayer);
     }
 
     /**
