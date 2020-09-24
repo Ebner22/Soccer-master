@@ -200,6 +200,7 @@ public class SoccerDatabase implements SoccerDB {
     @Override
     // report number of players on a given team (or all players, if null)
     public int numPlayers(String teamName) {
+
         return -1;
     }
 
@@ -211,6 +212,22 @@ public class SoccerDatabase implements SoccerDB {
     // get the nTH player
     @Override
     public SoccerPlayer playerNum(int idx, String teamName) {
+        int count=0;
+        if (teamName==null) {
+            for (SoccerPlayer p: hTable.values()){
+                if (count==idx){return p;}
+                else{count++;}
+                
+            }
+        }
+        else{
+            for (SoccerPlayer p: hTable.values()){
+                if (p.getTeamName().equals(teamName)){
+                    if (count==idx){return p;}
+                    else{count++;}
+                }
+            }
+        }
         return null;
     }
 
