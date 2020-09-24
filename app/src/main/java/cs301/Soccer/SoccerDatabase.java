@@ -73,7 +73,15 @@ public class SoccerDatabase implements SoccerDB {
      */
     @Override
     public boolean bumpGoals(String firstName, String lastName) {
-        return false;
+        String nameStringGetPlayer = firstName + "##" + lastName;
+        if (hTable.containsKey(nameStringGetPlayer)){
+            SoccerPlayer sp=hTable.get(nameStringGetPlayer);
+            sp.bumpGoals();
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
