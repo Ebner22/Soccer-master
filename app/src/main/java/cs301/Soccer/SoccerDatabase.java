@@ -3,6 +3,7 @@ package cs301.Soccer;
 import android.util.Log;
 import cs301.Soccer.soccerPlayer.SoccerPlayer;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -264,7 +265,29 @@ public class SoccerDatabase implements SoccerDB {
     // write data to file
     @Override
     public boolean writeData(File file) {
-        return false;
+        try {
+            PrintWriter pw = new PrintWriter(file);
+            for(SoccerPlayer p: hTable.values()) {
+                pw.println(logString("First Name: " + p.getFirstName()));
+                pw.println(logString("Last Name: " + p.getLastName()));
+                pw.println(logString("Team Name: " + p.getTeamName()));
+                pw.println(logString("Assists: " + Integer.toString((p.getAssists()))));
+                pw.println(logString("Fouls: " + Integer.toString((p.getFouls()))));
+                pw.println(logString("Goals: " + Integer.toString((p.getGoals()))));
+                pw.println(logString("Red Cards: " + Integer.toString((p.getRedCards()))));
+                pw.println(logString("Saves: " + Integer.toString((p.getSaves()))));
+                pw.println(logString("Shots: " + Integer.toString((p.getShots()))));
+                pw.println(logString("Uniform Number: " + Integer.toString((p.getUniform()))));
+                pw.println(logString("Yellow Cards: " + Integer.toString((p.getYellowCards()))));
+                pw.println(logString("******"));
+            }
+            pw.flush();
+            return true;
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
