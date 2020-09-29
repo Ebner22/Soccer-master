@@ -3,6 +3,7 @@ package cs301.Soccer;
 import android.util.Log;
 import cs301.Soccer.soccerPlayer.SoccerPlayer;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -264,7 +265,29 @@ public class SoccerDatabase implements SoccerDB {
     // write data to file
     @Override
     public boolean writeData(File file) {
-        return false;
+        try {
+            FileWriter fw=new FileWriter(file);
+            for (SoccerPlayer p: hTable.values()){
+                fw.write(logString(p.getFirstName()));
+                fw.write(logString(p.getLastName()));
+                fw.write(logString(""+p.getUniform()));
+                fw.write(logString(p.getTeamName()));
+                fw.write(logString(""+p.getAssists()));
+                fw.write(logString(""+p.getFouls()));
+                fw.write(logString(""+p.getGoals()));
+                fw.write(logString(""+p.getSaves()));
+                fw.write(logString(""+p.getShots()));
+                fw.write(logString(""+p.getYellowCards()));
+                fw.write(logString(""+p.getRedCards()));
+                fw.close();
+
+            }
+        } catch (IOException e) {
+            Log.e("File","An error occurred");
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     /**
