@@ -254,7 +254,47 @@ public class SoccerDatabase implements SoccerDB {
     // read data from file
     @Override
     public boolean readData(File file) {
-        return file.exists();
+        if (!file.exists()){return false;}
+        Scanner newScan= null;
+        try {
+            newScan = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        while (true) {
+            String firstName=newScan.next();
+            String lastName=newScan.next();
+            String teamName=newScan.next();
+            int assists=Integer.parseInt(newScan.next());
+            int fouls=Integer.parseInt(newScan.next());
+            int goals=Integer.parseInt(newScan.next());
+            int redCards=Integer.parseInt(newScan.next());
+            int saves=Integer.parseInt(newScan.next());
+            int shots=Integer.parseInt(newScan.next());
+            int uniformNum=Integer.parseInt(newScan.next());
+            int yelCards=Integer.parseInt(newScan.next());
+            /*SoccerPlayer sp=new SoccerPlayer(firstName, lastName, uniformNum, teamName);
+            for (int i=0; i<assists;i++){sp.bumpAssists();}
+            for (int i=0; i<fouls;i++){sp.bumpFouls();}
+            for (int i=0; i<goals;i++){sp.bumpGoals();}
+            for (int i=0; i<redCards;i++){sp.bumpRedCards();}
+            for (int i=0; i<yelCards;i++){sp.bumpYellowCards();}
+            for (int i=0; i<saves;i++){sp.bumpSaves();}
+            for (int i=0; i<shots;i++){sp.bumpShots();}*/
+
+            removePlayer(firstName, lastName);
+            addPlayer(firstName, lastName, uniformNum, teamName);
+            for (int i=0; i<assists;i++){bumpAssists(firstName, lastName);}
+            for (int i=0; i<fouls;i++){bumpFouls(firstName, lastName);}
+            for (int i=0; i<goals;i++){bumpGoals(firstName, lastName);}
+            for (int i=0; i<redCards;i++){bumpRedCards(firstName, lastName);}
+            for (int i=0; i<yelCards;i++){bumpYellowCards(firstName, lastName);}
+            for (int i=0; i<saves;i++){bumpSaves(firstName, lastName);}
+            for (int i=0; i<shots;i++){bumpShots(firstName, lastName);}
+
+            if (!newScan.hasNext()){break;}
+        }
+        return true;
     }
 
     /**
@@ -268,18 +308,18 @@ public class SoccerDatabase implements SoccerDB {
         try {
             PrintWriter pw = new PrintWriter(file);
             for(SoccerPlayer p: hTable.values()) {
-                pw.println(logString("First Name: " + p.getFirstName()));
-                pw.println(logString("Last Name: " + p.getLastName()));
-                pw.println(logString("Team Name: " + p.getTeamName()));
-                pw.println(logString("Assists: " + Integer.toString((p.getAssists()))));
-                pw.println(logString("Fouls: " + Integer.toString((p.getFouls()))));
-                pw.println(logString("Goals: " + Integer.toString((p.getGoals()))));
-                pw.println(logString("Red Cards: " + Integer.toString((p.getRedCards()))));
-                pw.println(logString("Saves: " + Integer.toString((p.getSaves()))));
-                pw.println(logString("Shots: " + Integer.toString((p.getShots()))));
-                pw.println(logString("Uniform Number: " + Integer.toString((p.getUniform()))));
-                pw.println(logString("Yellow Cards: " + Integer.toString((p.getYellowCards()))));
-                pw.println(logString("******"));
+                pw.println(logString(p.getFirstName()));
+                pw.println(logString(p.getLastName()));
+                pw.println(logString(p.getTeamName()));
+                pw.println(logString( Integer.toString((p.getAssists()))));
+                pw.println(logString( Integer.toString((p.getFouls()))));
+                pw.println(logString( Integer.toString((p.getGoals()))));
+                pw.println(logString( Integer.toString((p.getRedCards()))));
+                pw.println(logString( Integer.toString((p.getSaves()))));
+                pw.println(logString( Integer.toString((p.getShots()))));
+                pw.println(logString( Integer.toString((p.getUniform()))));
+                pw.println(logString( Integer.toString((p.getYellowCards()))));
+                //pw.println(logString("******"));
             }
             pw.flush();
             return true;

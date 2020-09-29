@@ -45,6 +45,7 @@ public class SoccerPlayer {
         redCards = 0;
     }
 
+
     // "get methods"
     public String getFirstName() {
         return firstName;
